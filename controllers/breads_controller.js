@@ -4,14 +4,15 @@ const Bread = require('../models/bread.js')
 const Baker = require('../models/baker.js')
 //INDEX
 breads.get('/', async (req, res)=>{
- const foundBakers = await Baker.find()
- const foundBreads = await Bread.find()
-          res.render('index', {
-            breads: foundBreads,
-            bakers: foundBakers,
-            title: 'Index Page'
-        })
-      }) 
+ const foundBakers = await Baker.find().lean()
+ const foundBreads = await Bread.find().limit(2).lean()
+ console.log(foundBreads, 'Awesome!!')
+    res.render('index', {
+      breads: foundBreads,
+      bakers: foundBakers,
+      title: 'Index Page'
+    })
+ }) 
   
 //old edit route
 breads.get('/:id/edit', (req, res)=>{
